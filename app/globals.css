@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F7F8FB;
+  --surface: #FFFFFF;
+  --ink: #12141C;
+  --ink-muted: #565A6E;
+  --border: #E4E6F0;
+  --primary: #5B4CFF;
+  --primary-ink: #FFFFFF;
+  --accent: #F5A623;
+  --accent-ink: #12141C;
+  --success: #1E9E6B;
+  --danger: #E5484D;
+}
+
+.dark {
+  --background: #0D0E1A;
+  --surface: #151726;
+  --ink: #F4F5FA;
+  --ink-muted: #9195AD;
+  --border: #262A40;
+  --primary: #7C6CFF;
+  --primary-ink: #0D0E1A;
+  --accent: #FFC04D;
+  --accent-ink: #12141C;
+  --success: #39C98E;
+  --danger: #FF6B6F;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --font-display: var(--font-space-grotesk);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dotted "network" texture used behind the hero */
+.grid-texture {
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+::selection {
+  background: var(--primary);
+  color: var(--primary-ink);
+}
