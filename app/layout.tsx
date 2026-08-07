@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description: brand.description,
   applicationName: brand.name,
   manifest: "/manifest.json",
-  icons: { icon: "/favicon.ico" },
+  icons: { icon: "/favicon.png" },
   openGraph: {
     title: brand.metadata.title,
     description: brand.description,

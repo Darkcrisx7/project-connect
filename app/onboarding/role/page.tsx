@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { motion } from "framer-motion";
 import { Lightbulb, Users, Wrench } from "lucide-react";
 import { setRole } from "@/app/onboarding/actions";
@@ -28,6 +28,7 @@ const roles = [
 
 export default function RoleSelectionPage() {
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string>();
 
   return (
     <div className="grid-texture flex min-h-screen items-center justify-center px-4 py-12">
@@ -39,15 +40,26 @@ export default function RoleSelectionPage() {
           This decides what your dashboard looks like — you can change it later.
         </p>
 
+        {error && (
+          <p className="mt-4 rounded-lg bg-danger/10 px-4 py-2.5 text-center text-[13px] text-danger">
+            {error}
+          </p>
+        )}
+
         <div className="mt-8 space-y-3">
           {roles.map((role, i) => (
             <motion.button
               key={role.id}
               type="button"
               disabled={pending}
-              onClick={() => startTransition(async () => {
-                await setRole(role.id);
-              })}
+              onClick={() => {
+                if (pending) return;
+                setError(undefined);
+                startTransition(async () => {
+                  const res = await setRole(role.id);
+                  if (res?.error) setError(res.error);
+                });
+              }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
