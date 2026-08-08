@@ -87,3 +87,10 @@ create policy "Users can update their own profile"
 -- No insert/delete policies for regular users — rows are created only by
 -- the handle_new_user trigger (runs as security definer) and cascade-deleted
 -- with the auth user.
+
+-- Added after Phase 1 testing: the self-healing profile logic (ensure-profile.ts)
+-- needs to be able to insert a row for accounts created before this schema
+-- existed. Without this, insert attempts are silently blocked by RLS.
+create policy "Users can insert their own profile"
+  on public.profiles for insert
+  with check (auth.uid() = id);

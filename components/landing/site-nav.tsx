@@ -24,7 +24,7 @@ export function SiteNav() {
             <a href="#how-it-works" className="text-sm text-ink-muted hover:text-ink transition-colors">
               How it works
             </a>
-            <a href="#startups" className="text-sm text-ink-muted hover:text-ink transition-colors">
+            <a href="/discover" className="text-sm text-ink-muted hover:text-ink transition-colors">
               Discover startups
             </a>
             <a href="#stories" className="text-sm text-ink-muted hover:text-ink transition-colors">
@@ -58,8 +58,8 @@ export function SiteNav() {
         <div className="mx-auto flex max-w-md items-center justify-around px-2">
           {[
             { icon: Home, label: "Home", href: "/" },
-            { icon: Compass, label: "Discover", href: "#startups" },
-            { icon: Rocket, label: "Post idea", href: "/signup" },
+            { icon: Compass, label: "Discover", href: "/discover" },
+            { icon: Rocket, label: "Post idea", href: "/startups/new" },
             { icon: User, label: "Profile", href: "/login" },
           ].map(({ icon: Icon, label, href }) => (
             <a

@@ -38,7 +38,7 @@ export function Hero() {
             <Button variant="accent" size="lg" href="/signup">
               Post your idea <ArrowRight size={18} />
             </Button>
-            <Button variant="outline" size="lg" href="#startups">
+            <Button variant="outline" size="lg" href="/discover">
               Browse startups
             </Button>
           </div>

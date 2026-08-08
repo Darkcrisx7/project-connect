@@ -59,3 +59,26 @@ npm run dev
 - Applications + founder dashboard
 - Connection-request messaging
 - Premium/Razorpay, notifications, admin panel
+
+## Phase 2 — Startup Listings + Discovery (added)
+
+### Database
+Run `supabase/schema-phase2.sql` in the Supabase SQL Editor (after Phase 1's
+schema is already applied). This adds the `startups` table with RLS: anyone
+can browse active listings, only the founder who created one can edit/delete it.
+
+### What's wired up
+- `/startups/new` — create a listing (protected, redirects to login if signed out)
+- `/discover` — browse all active listings with search + filters (industry,
+  stage, remote/hybrid/on-site, newest/oldest) — filters live in the URL so
+  they're shareable/bookmarkable
+- `/startups/[id]` — full listing detail page; shows an "Apply" button
+  (disabled — wired up in Phase 3) or "This is your listing" if you're the founder
+- Dashboard now shows "Post your idea" / "Browse startups" buttons and lists
+  your own posted startups
+
+### Still to build (Phase 3+)
+- Applications (the Apply button becomes real)
+- Founder dashboard: view/accept/reject/shortlist applicants
+- Connection-request messaging
+- Premium/Razorpay, notifications, admin panel

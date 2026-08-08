@@ -3,6 +3,9 @@ import { ensureProfile } from "@/lib/supabase/ensure-profile";
 import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
+import { StartupCard } from "@/components/discover/startup-card";
+import { Plus, Compass } from "lucide-react";
+import type { Startup } from "@/lib/startup-constants";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -17,6 +20,13 @@ export default async function DashboardPage() {
   if (!profile || !profile.onboarding_complete) {
     redirect(profile?.role ? "/onboarding/profile" : "/onboarding/role");
   }
+
+  const { data: myStartups } = await supabase
+    .from("startups")
+    .select("*, profiles(full_name, college, avatar_url)")
+    .eq("founder_id", user.id)
+    .order("created_at", { ascending: false })
+    .returns<Startup[]>();
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-12 pb-28 sm:py-16 md:pb-16">
@@ -36,6 +46,26 @@ export default async function DashboardPage() {
         </form>
       </div>
 
+      <div className="mt-6 flex flex-wrap gap-3">
+        <Button variant="primary" size="md" href="/startups/new">
+          <Plus size={18} /> Post your idea
+        </Button>
+        <Button variant="outline" size="md" href="/discover">
+          <Compass size={18} /> Browse startups
+        </Button>
+      </div>
+
+      {myStartups && myStartups.length > 0 && (
+        <div className="mt-8">
+          <h2 className="font-display text-[15px] font-semibold">Your listings</h2>
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {myStartups.map((s) => (
+              <StartupCard key={s.id} startup={s} />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="mt-8 rounded-2xl border border-border bg-surface p-6">
         <h2 className="font-display text-[15px] font-semibold">Your profile</h2>
         <dl className="mt-4 space-y-3 text-[14px]">
@@ -48,7 +78,7 @@ export default async function DashboardPage() {
       </div>
 
       <p className="mt-6 text-center text-[13px] text-ink-muted">
-        Startup listings, discovery, and applications land in the next phase.
+        Applications and connection requests land in the next phase.
       </p>
     </div>
   );
