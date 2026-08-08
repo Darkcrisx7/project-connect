@@ -14,12 +14,20 @@ export async function setRole(role: "founder" | "co_founder" | "team_member") {
 
   await ensureProfile(supabase, user);
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({ role })
-    .eq("id", user.id);
+    .eq("id", user.id)
+    .select("id")
+    .single();
 
-  if (error) return { error: error.message };
+  if (error || !data) {
+    return {
+      error:
+        error?.message ??
+        "Save didn't go through (0 rows updated) — this usually means a database permissions rule is blocking it.",
+    };
+  }
   redirect("/onboarding/profile");
 }
 
@@ -57,7 +65,7 @@ export async function saveProfile(formData: FormData) {
   const toArray = (v?: string) =>
     v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [];
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("profiles")
     .update({
       college: parsed.data.college,
@@ -74,8 +82,16 @@ export async function saveProfile(formData: FormData) {
       portfolio_url: parsed.data.portfolioUrl || null,
       onboarding_complete: true,
     })
-    .eq("id", user.id);
+    .eq("id", user.id)
+    .select("id")
+    .single();
 
-  if (error) return { error: error.message };
+  if (error || !data) {
+    return {
+      error:
+        error?.message ??
+        "Save didn't go through (0 rows updated) — this usually means a database permissions rule is blocking it.",
+    };
+  }
   redirect("/dashboard");
 }
