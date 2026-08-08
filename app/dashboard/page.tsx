@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { ensureProfile } from "@/lib/supabase/ensure-profile";
 import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
@@ -11,14 +12,10 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id)
-    .single();
+  const profile = await ensureProfile(supabase, user);
 
-  if (profile && !profile.onboarding_complete) {
-    redirect(profile.role ? "/onboarding/profile" : "/onboarding/role");
+  if (!profile || !profile.onboarding_complete) {
+    redirect(profile?.role ? "/onboarding/profile" : "/onboarding/role");
   }
 
   return (

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { ensureProfile } from "@/lib/supabase/ensure-profile";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -10,12 +11,7 @@ export async function GET(request: NextRequest) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error && data.user) {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("onboarding_complete")
-        .eq("id", data.user.id)
-        .single();
-
+      const profile = await ensureProfile(supabase, data.user);
       const next = profile?.onboarding_complete ? "/dashboard" : "/onboarding/role";
       return NextResponse.redirect(`${origin}${next}`);
     }

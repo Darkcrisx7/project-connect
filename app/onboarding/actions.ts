@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { ensureProfile } from "@/lib/supabase/ensure-profile";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -10,6 +11,8 @@ export async function setRole(role: "founder" | "co_founder" | "team_member") {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+
+  await ensureProfile(supabase, user);
 
   const { error } = await supabase
     .from("profiles")
@@ -48,6 +51,8 @@ export async function saveProfile(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+
+  await ensureProfile(supabase, user);
 
   const toArray = (v?: string) =>
     v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [];
