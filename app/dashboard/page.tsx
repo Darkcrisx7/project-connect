@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
 import { StartupCard } from "@/components/discover/startup-card";
-import { Plus, Compass } from "lucide-react";
+import { Plus, Compass, Inbox } from "lucide-react";
 import type { Startup } from "@/lib/startup-constants";
 
 export default async function DashboardPage() {
@@ -52,6 +52,9 @@ export default async function DashboardPage() {
         </Button>
         <Button variant="outline" size="md" href="/discover">
           <Compass size={18} /> Browse startups
+        </Button>
+        <Button variant="outline" size="md" href="/applications">
+          <Inbox size={18} /> My applications
         </Button>
       </div>
 

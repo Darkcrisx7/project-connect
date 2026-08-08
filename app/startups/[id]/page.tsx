@@ -1,8 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { MapPin, Users, Calendar, Briefcase, ArrowLeft } from "lucide-react";
+import { MapPin, Users, Calendar, Briefcase, ArrowLeft, Inbox } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ApplyForm } from "@/components/applications/apply-form";
+import { WithdrawButton } from "@/components/applications/withdraw-button";
+import { applicationStatusLabels, applicationStatusStyles } from "@/lib/application-constants";
 import type { Startup } from "@/lib/startup-constants";
 
 const stageLabels: Record<string, string> = { idea: "Idea", mvp: "MVP", revenue: "Revenue" };
@@ -30,6 +33,15 @@ export default async function StartupDetailPage({
   if (!startup) notFound();
 
   const isOwner = user?.id === startup.founder_id;
+
+  const { data: myApplication } = user && !isOwner
+    ? await supabase
+        .from("applications")
+        .select("id, status")
+        .eq("startup_id", id)
+        .eq("applicant_id", user.id)
+        .maybeSingle()
+    : { data: null };
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-10 pb-28 sm:py-14 md:pb-14">
@@ -108,12 +120,32 @@ export default async function StartupDetailPage({
           </p>
         </div>
         {isOwner ? (
-          <span className="rounded-full bg-background px-3 py-1.5 text-[12px] text-ink-muted">
-            This is your listing
-          </span>
+          <div className="flex items-center gap-3">
+            {startup.open_roles > 0 && (
+              <Button variant="outline" size="md" href={`/startups/${startup.id}/applicants`}>
+                <Inbox size={16} /> View applicants
+              </Button>
+            )}
+            <span className="rounded-full bg-background px-3 py-1.5 text-[12px] text-ink-muted">
+              This is your listing
+            </span>
+          </div>
+        ) : myApplication ? (
+          <div className="text-right">
+            <span
+              className={`rounded-full border px-3 py-1.5 text-[12px] ${applicationStatusStyles[myApplication.status]}`}
+            >
+              {applicationStatusLabels[myApplication.status]}
+            </span>
+            <div className="mt-1.5">
+              <WithdrawButton applicationId={myApplication.id} startupId={startup.id} />
+            </div>
+          </div>
+        ) : user ? (
+          <ApplyForm startupId={startup.id} />
         ) : (
-          <Button variant="primary" size="md" disabled>
-            Apply (Phase 3)
+          <Button variant="primary" size="md" href={`/login?next=/startups/${startup.id}`}>
+            Log in to apply
           </Button>
         )}
       </div>

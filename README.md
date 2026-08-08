@@ -82,3 +82,31 @@ can browse active listings, only the founder who created one can edit/delete it.
 - Founder dashboard: view/accept/reject/shortlist applicants
 - Connection-request messaging
 - Premium/Razorpay, notifications, admin panel
+
+## Phase 3 — Applications + Founder Inbox + Contact Unlock (added)
+
+### Database
+Run `supabase/schema-phase3.sql` in the Supabase SQL Editor (after Phase 1
+and Phase 2 schemas are already applied). This adds:
+- `applications` table (student → startup, with intro/why-join/status)
+- RLS so only the applicant and the founder of that startup can see an application
+- A `get_contact_email()` database function — email is only ever returned
+  when an accepted application connects the two people asking. This is
+  enforced by the database itself, not just hidden in the UI.
+
+### What's wired up
+- `/startups/[id]` — real Apply button (inline form), shows your application
+  status if you've already applied, lets you withdraw a pending one
+- `/startups/[id]/applicants` — founder-only inbox for one listing: see each
+  applicant's intro, why-join, skills, and Shortlist/Accept/Reject buttons.
+  Contact details (email, GitHub, LinkedIn, portfolio) only appear once
+  status is Accepted.
+- `/applications` — student's "My Applications" list across every startup
+  they've applied to, with the founder's email unlocked once accepted
+- Dashboard now links to "My applications"; each of your own listings on
+  the dashboard links through to /startups/[id] → "View applicants"
+
+### Still to build (Phase 4+)
+- Premium/Razorpay (unlimited applications, featured listings)
+- Notifications (in-app, for status changes and new applications)
+- Admin panel (approve listings, manage reports, platform settings)
