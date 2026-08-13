@@ -3,6 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { isPremium } from "@/lib/premium";
 
 const startupSchema = z.object({
   name: z.string().min(2, "Give your startup a name"),
@@ -34,6 +35,26 @@ export async function createStartup(formData: FormData) {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("premium_until")
+    .eq("id", user.id)
+    .single();
+
+  if (!isPremium(profile)) {
+    const { count } = await supabase
+      .from("startups")
+      .select("id", { count: "exact", head: true })
+      .eq("founder_id", user.id)
+      .eq("is_active", true);
+
+    if ((count ?? 0) >= 1) {
+      return {
+        error: "Free plan allows 1 active listing. Upgrade to Pro (₹59/mo) from your dashboard for unlimited listings.",
+      };
+    }
+  }
 
   const toArray = (v?: string) =>
     v ? v.split(",").map((s) => s.trim()).filter(Boolean) : [];

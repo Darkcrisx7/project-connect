@@ -110,3 +110,36 @@ and Phase 2 schemas are already applied). This adds:
 - Premium/Razorpay (unlimited applications, featured listings)
 - Notifications (in-app, for status changes and new applications)
 - Admin panel (approve listings, manage reports, platform settings)
+
+## Phase 4 — Pro Subscription via Razorpay (added)
+
+### Database
+Run `supabase/schema-phase4.sql` (after Phases 1-3). Adds `premium_until` to
+profiles and a `payments` table that records every order/payment attempt.
+
+### New environment variables (add in Vercel too, then redeploy)
+- `RAZORPAY_KEY_ID` — from Razorpay Dashboard > Settings > API Keys
+- `RAZORPAY_KEY_SECRET` — same page (keep this secret, never commit it)
+- `SUPABASE_SERVICE_ROLE_KEY` — Supabase Project Settings > API > service_role
+  key (also secret — this one bypasses all RLS, never expose it to the client)
+
+### What's wired up
+- Single Pro tier: **₹59/month**, no free trial
+- Free plan limits: 1 active listing, 3 applications/month — enforced in the
+  server actions themselves (`createStartup`, `applyToStartup`), not just the UI
+- Dashboard shows current plan status and an "Upgrade to Pro" button
+  (Razorpay Checkout modal) when on the free plan, or "You're on Pro" with
+  the renewal date when active
+- Payment verification is done server-side via HMAC signature check — the
+  client can never fake a successful payment
+- Renewing early stacks on top of remaining days rather than wasting them
+
+### Still to build (Phase 5+)
+- Notifications (in-app, for status changes and new applications)
+- Admin panel (approve listings, manage reports, platform settings)
+
+### Known limitation
+"Priority visibility" for Pro listings in Discover isn't implemented yet —
+Pro currently only removes the free-tier limits. Ranked sorting (Pro
+listings surfaced first) would need a join-aware sort and is a good Phase 5
+candidate if you want it.

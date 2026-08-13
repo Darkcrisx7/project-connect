@@ -4,7 +4,9 @@ import { redirect } from "next/navigation";
 import { signOut } from "@/app/auth/actions";
 import { Button } from "@/components/ui/button";
 import { StartupCard } from "@/components/discover/startup-card";
-import { Plus, Compass, Inbox } from "lucide-react";
+import { UpgradeButton } from "@/components/premium/upgrade-button";
+import { isPremium } from "@/lib/premium";
+import { Plus, Compass, Inbox, Sparkles } from "lucide-react";
 import type { Startup } from "@/lib/startup-constants";
 
 export default async function DashboardPage() {
@@ -21,6 +23,8 @@ export default async function DashboardPage() {
     redirect(profile?.role ? "/onboarding/profile" : "/onboarding/role");
   }
 
+  const pro = isPremium(profile);
+
   const { data: myStartups } = await supabase
     .from("startups")
     .select("*, profiles(full_name, college, avatar_url)")
@@ -32,9 +36,16 @@ export default async function DashboardPage() {
     <div className="mx-auto max-w-2xl px-4 py-12 pb-28 sm:py-16 md:pb-16">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-semibold">
-            Welcome, {profile?.full_name || "there"}
-          </h1>
+          <div className="flex items-center gap-2">
+            <h1 className="font-display text-2xl font-semibold">
+              Welcome, {profile?.full_name || "there"}
+            </h1>
+            {pro && (
+              <span className="flex items-center gap-1 rounded-full bg-accent/15 px-2.5 py-0.5 font-mono text-[11px] text-accent-ink">
+                <Sparkles size={12} /> Pro
+              </span>
+            )}
+          </div>
           <p className="mt-1 text-[14px] text-ink-muted">
             {profile?.role?.replace("_", "-")} · {profile?.college}
           </p>
@@ -58,6 +69,34 @@ export default async function DashboardPage() {
         </Button>
       </div>
 
+      <div className="mt-8 rounded-2xl border border-border bg-surface p-6">
+        {pro ? (
+          <>
+            <h2 className="flex items-center gap-1.5 font-display text-[15px] font-semibold">
+              <Sparkles size={16} className="text-accent" /> You&apos;re on Pro
+            </h2>
+            <p className="mt-1.5 text-[13px] text-ink-muted">
+              Unlimited listings and applications, active until{" "}
+              {new Date(profile.premium_until!).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}.
+            </p>
+            <div className="mt-4">
+              <UpgradeButton userEmail={profile.email} userName={profile.full_name || ""} />
+            </div>
+          </>
+        ) : (
+          <>
+            <h2 className="font-display text-[15px] font-semibold">Free plan</h2>
+            <p className="mt-1.5 text-[13px] text-ink-muted">
+              1 active listing and 3 applications a month. Upgrade to Pro for
+              unlimited listings and unlimited applications.
+            </p>
+            <div className="mt-4">
+              <UpgradeButton userEmail={profile.email} userName={profile.full_name || ""} />
+            </div>
+          </>
+        )}
+      </div>
+
       {myStartups && myStartups.length > 0 && (
         <div className="mt-8">
           <h2 className="font-display text-[15px] font-semibold">Your listings</h2>
@@ -79,10 +118,6 @@ export default async function DashboardPage() {
           <Row label="Location" value={profile?.location || "—"} />
         </dl>
       </div>
-
-      <p className="mt-6 text-center text-[13px] text-ink-muted">
-        Applications and connection requests land in the next phase.
-      </p>
     </div>
   );
 }

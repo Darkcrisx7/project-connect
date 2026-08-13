@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { isPremium } from "@/lib/premium";
 
 const applySchema = z.object({
   startupId: z.string().uuid(),
@@ -33,6 +34,30 @@ export async function applyToStartup(formData: FormData) {
 
   if (startup?.founder_id === user.id) {
     return { error: "You can't apply to your own listing." };
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("premium_until")
+    .eq("id", user.id)
+    .single();
+
+  if (!isPremium(profile)) {
+    const startOfMonth = new Date();
+    startOfMonth.setDate(1);
+    startOfMonth.setHours(0, 0, 0, 0);
+
+    const { count } = await supabase
+      .from("applications")
+      .select("id", { count: "exact", head: true })
+      .eq("applicant_id", user.id)
+      .gte("created_at", startOfMonth.toISOString());
+
+    if ((count ?? 0) >= 3) {
+      return {
+        error: "You've used your 3 free applications this month. Upgrade to Pro (₹59/mo) for unlimited applications.",
+      };
+    }
   }
 
   const { error } = await supabase.from("applications").insert({
