@@ -51,7 +51,7 @@ export async function createStartup(formData: FormData) {
 
     if ((count ?? 0) >= 1) {
       return {
-        error: "Free plan allows 1 active listing. Upgrade to Pro (₹59/mo) from your dashboard for unlimited listings.",
+        error: "Free plan allows 1 active listing. Upgrade to Pro (₹79/mo) from your dashboard for unlimited listings.",
       };
     }
   }

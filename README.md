@@ -124,7 +124,7 @@ profiles and a `payments` table that records every order/payment attempt.
   key (also secret — this one bypasses all RLS, never expose it to the client)
 
 ### What's wired up
-- Single Pro tier: **₹59/month**, no free trial
+- Single Pro tier: **₹79/month**, no free trial
 - Free plan limits: 1 active listing, 3 applications/month — enforced in the
   server actions themselves (`createStartup`, `applyToStartup`), not just the UI
 - Dashboard shows current plan status and an "Upgrade to Pro" button

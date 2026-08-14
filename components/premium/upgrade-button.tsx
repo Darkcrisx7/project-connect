@@ -90,7 +90,7 @@ export function UpgradeButton({
   return (
     <div>
       <Button variant="accent" size="md" onClick={handleUpgrade} disabled={loading}>
-        {loading ? "Opening checkout…" : "Upgrade to Pro — ₹59/mo"}
+        {loading ? "Opening checkout…" : "Upgrade to Pro — ₹79/mo"}
       </Button>
       {error && <p className="mt-2 text-[13px] text-danger">{error}</p>}
     </div>

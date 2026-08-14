@@ -7,5 +7,5 @@ export function getRazorpay() {
   });
 }
 
-export const PRO_PRICE_PAISE = 5900; // ₹59.00
+export const PRO_PRICE_PAISE = 7900; // ₹79.00
 export const PRO_DURATION_DAYS = 30;

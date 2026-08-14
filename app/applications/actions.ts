@@ -55,7 +55,7 @@ export async function applyToStartup(formData: FormData) {
 
     if ((count ?? 0) >= 3) {
       return {
-        error: "You've used your 3 free applications this month. Upgrade to Pro (₹59/mo) for unlimited applications.",
+        error: "You've used your 3 free applications this month. Upgrade to Pro (₹79/mo) for unlimited applications.",
       };
     }
   }
