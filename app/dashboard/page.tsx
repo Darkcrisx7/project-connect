@@ -80,7 +80,13 @@ export default async function DashboardPage() {
               {new Date(profile.premium_until!).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}.
             </p>
             <div className="mt-4">
-              <UpgradeButton userEmail={profile.email} userName={profile.full_name || ""} />
+              <UpgradeButton
+                userEmail={profile.email}
+                userName={profile.full_name || ""}
+                label="Extend by another month — ₹79"
+                loadingLabel="Opening checkout…"
+                variant="outline"
+              />
             </div>
           </>
         ) : (

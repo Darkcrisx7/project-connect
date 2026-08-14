@@ -24,9 +24,15 @@ function loadRazorpayScript(): Promise<boolean> {
 export function UpgradeButton({
   userEmail,
   userName,
+  label = "Upgrade to Pro — ₹79/mo",
+  loadingLabel = "Opening checkout…",
+  variant = "accent",
 }: {
   userEmail: string;
   userName: string;
+  label?: string;
+  loadingLabel?: string;
+  variant?: "accent" | "outline";
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
@@ -89,8 +95,8 @@ export function UpgradeButton({
 
   return (
     <div>
-      <Button variant="accent" size="md" onClick={handleUpgrade} disabled={loading}>
-        {loading ? "Opening checkout…" : "Upgrade to Pro — ₹79/mo"}
+      <Button variant={variant} size="md" onClick={handleUpgrade} disabled={loading}>
+        {loading ? loadingLabel : label}
       </Button>
       {error && <p className="mt-2 text-[13px] text-danger">{error}</p>}
     </div>
