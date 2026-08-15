@@ -143,3 +143,34 @@ profiles and a `payments` table that records every order/payment attempt.
 Pro currently only removes the free-tier limits. Ranked sorting (Pro
 listings surfaced first) would need a join-aware sort and is a good Phase 5
 candidate if you want it.
+
+## Phase 5 — Notifications (added)
+
+### Database
+Run `supabase/schema-phase5.sql` (after Phases 1-4). Adds a `notifications`
+table plus two database triggers:
+- New application on your listing → notifies you (the founder) automatically
+- Your application's status changes to Shortlisted/Accepted/Rejected →
+  notifies you (the applicant) automatically
+
+These fire at the database level, not from app code — so a notification
+gets created no matter which code path caused the change, and nobody can
+forge a notification via a direct API call (no insert policy exists for
+regular users).
+
+### Structural change
+All authenticated pages (`/dashboard`, `/discover`, `/startups/*`,
+`/applications`) now live under a shared layout (`app/(app)/layout.tsx`)
+with a persistent header: logo, Dashboard/Discover/Applications links, and
+a notification bell with an unread-count dot. URLs are unchanged — this
+was a route-group reorganization, not a URL change.
+
+### What's wired up
+- Bell icon (top right on every logged-in page) — dropdown of the 8 most
+  recent notifications, click to mark read and jump to the relevant page
+- `/notifications` — full history, "Mark all read"
+- Unread dot clears per-notification on click, or all at once
+
+### Still to build (Phase 6)
+- Admin panel: approve listings, manage reports, manage subscriptions,
+  analytics dashboard, user management, content moderation, platform settings
