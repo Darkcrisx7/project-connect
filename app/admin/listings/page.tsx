@@ -10,6 +10,10 @@ type Startup = {
   founder_id: string
   moderation_status: 'pending' | 'approved' | 'rejected'
   created_at: string
+  profiles: {
+    full_name: string | null
+    email: string
+  } | null
 }
 
 export default function AdminListingsPage() {
@@ -25,7 +29,10 @@ export default function AdminListingsPage() {
 
   async function load() {
     setLoading(true)
-    let query = supabase.from('startups').select('*').order('created_at', { ascending: false })
+    let query = supabase
+      .from('startups')
+      .select('*, profiles:founder_id(full_name, email)')
+      .order('created_at', { ascending: false })
     if (filter !== 'all') query = query.eq('moderation_status', filter)
     const { data } = await query
     setListings((data as Startup[]) ?? [])
@@ -88,7 +95,9 @@ export default function AdminListingsPage() {
                     {s.description}
                   </p>
                   <p className="text-xs text-muted-foreground mt-2">
-                    Submitted {new Date(s.created_at).toLocaleDateString('en-IN')}
+                    By {s.profiles?.full_name ?? 'Unknown'}
+                    {s.profiles?.email ? ` (${s.profiles.email})` : ''} · Submitted{' '}
+                    {new Date(s.created_at).toLocaleDateString('en-IN')}
                   </p>
                 </div>
                 {s.moderation_status === 'pending' && (
