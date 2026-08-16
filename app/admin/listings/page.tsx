@@ -64,7 +64,7 @@ export default function AdminListingsPage() {
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
               filter === f
-                ? 'bg-foreground text-background'
+                ? 'bg-indigo-600 text-white'
                 : 'bg-accent text-muted-foreground hover:text-foreground'
             }`}
           >
