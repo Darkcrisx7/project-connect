@@ -7,6 +7,7 @@ type AppUser = {
   id: string
   full_name: string | null
   email: string
+  phone_number: string | null
   role: string | null
   is_pro: boolean
   is_suspended: boolean
@@ -28,7 +29,7 @@ export default function AdminUsersPage() {
     setLoading(true)
     let query = supabase
       .from('profiles')
-      .select('id, full_name, email, role, is_pro, is_suspended, created_at')
+      .select('id, full_name, email, phone_number, role, is_pro, is_suspended, created_at')
       .order('created_at', { ascending: false })
       .limit(200)
     if (search.trim()) {
@@ -87,6 +88,7 @@ export default function AdminUsersPage() {
               <tr>
                 <th className="text-left font-medium px-4 py-3">Name</th>
                 <th className="text-left font-medium px-4 py-3">Email</th>
+                <th className="text-left font-medium px-4 py-3">Phone</th>
                 <th className="text-left font-medium px-4 py-3">Role</th>
                 <th className="text-left font-medium px-4 py-3">Pro</th>
                 <th className="text-left font-medium px-4 py-3">Status</th>
@@ -98,6 +100,7 @@ export default function AdminUsersPage() {
                 <tr key={u.id} className="border-t border-border">
                   <td className="px-4 py-3">{u.full_name ?? '—'}</td>
                   <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
+                  <td className="px-4 py-3 text-muted-foreground">{u.phone_number ?? '—'}</td>
                   <td className="px-4 py-3 capitalize">{u.role ?? '—'}</td>
                   <td className="px-4 py-3">{u.is_pro ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-3">
