@@ -46,25 +46,25 @@ export default function AdminSubscriptionsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Subscriptions</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           Active Pro subscribers · ₹79/month each · {users.length} active
         </p>
       </div>
 
       {expiringSoon.length > 0 && (
-        <div className="rounded-xl border border-amber-400/60 bg-amber-500/5 p-4 text-sm">
+        <div className="rounded-xl border border-accent/60 bg-accent/5 p-4 text-sm">
           {expiringSoon.length} subscription(s) expiring within 3 days.
         </div>
       )}
 
       {loading ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-ink-muted">Loading…</p>
       ) : users.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No active Pro subscribers yet.</p>
+        <p className="text-sm text-ink-muted">No active Pro subscribers yet.</p>
       ) : (
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <div className="rounded-xl border border-border bg-surface overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-accent/50 text-muted-foreground">
+            <thead className="bg-accent/50 text-ink-muted">
               <tr>
                 <th className="text-left font-medium px-4 py-3">Name</th>
                 <th className="text-left font-medium px-4 py-3">Email</th>
@@ -75,7 +75,7 @@ export default function AdminSubscriptionsPage() {
               {users.map((u) => (
                 <tr key={u.id} className="border-t border-border">
                   <td className="px-4 py-3">{u.full_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
+                  <td className="px-4 py-3 text-ink-muted">{u.email}</td>
                   <td className="px-4 py-3">
                     {u.pro_expires_at
                       ? new Date(u.pro_expires_at).toLocaleDateString('en-IN')
