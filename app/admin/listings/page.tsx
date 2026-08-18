@@ -59,7 +59,7 @@ export default function AdminListingsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Listings</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           Review and moderate startup listings.
         </p>
       </div>
@@ -71,8 +71,8 @@ export default function AdminListingsPage() {
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
               filter === f
-                ? 'bg-indigo-600 text-white'
-                : 'bg-accent text-muted-foreground hover:text-foreground'
+                ? 'bg-primary text-primary-ink'
+                : 'bg-accent text-ink-muted hover:text-ink'
             }`}
           >
             {f}
@@ -81,20 +81,20 @@ export default function AdminListingsPage() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-ink-muted">Loading…</p>
       ) : listings.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No listings in this view.</p>
+        <p className="text-sm text-ink-muted">No listings in this view.</p>
       ) : (
         <div className="space-y-3">
           {listings.map((s) => (
-            <div key={s.id} className="rounded-xl border border-border bg-card p-5">
+            <div key={s.id} className="rounded-xl border border-border bg-surface p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <h3 className="font-medium truncate">{s.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                  <p className="text-sm text-ink-muted mt-1 line-clamp-2">
                     {s.description}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="text-xs text-ink-muted mt-2">
                     By {s.profiles?.full_name ?? 'Unknown'}
                     {s.profiles?.email ? ` (${s.profiles.email})` : ''} · Submitted{' '}
                     {new Date(s.created_at).toLocaleDateString('en-IN')}
@@ -105,7 +105,7 @@ export default function AdminListingsPage() {
                     <button
                       disabled={actioningId === s.id}
                       onClick={() => moderate(s.id, 'approved')}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 disabled:opacity-50"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-success/10 text-success hover:bg-success/20 disabled:opacity-50"
                     >
                       Approve
                     </button>
@@ -115,7 +115,7 @@ export default function AdminListingsPage() {
                         const note = window.prompt('Reason for rejection (shown to founder):')
                         if (note !== null) moderate(s.id, 'rejected', note)
                       }}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-red-500/10 text-red-600 hover:bg-red-500/20 disabled:opacity-50"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-danger/10 text-danger hover:bg-danger/20 disabled:opacity-50"
                     >
                       Reject
                     </button>
@@ -125,8 +125,8 @@ export default function AdminListingsPage() {
                   <span
                     className={`text-xs font-medium px-2 py-1 rounded-full shrink-0 capitalize ${
                       s.moderation_status === 'approved'
-                        ? 'bg-emerald-500/10 text-emerald-600'
-                        : 'bg-red-500/10 text-red-600'
+                        ? 'bg-success/10 text-success'
+                        : 'bg-danger/10 text-danger'
                     }`}
                   >
                     {s.moderation_status}
