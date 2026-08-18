@@ -32,7 +32,7 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-screen bg-background flex">
-      <aside className="w-64 border-r border-border bg-card hidden md:flex flex-col">
+      <aside className="w-64 border-r border-border bg-surface hidden md:flex flex-col">
         <div className="p-6 border-b border-border">
           <span className="font-semibold text-lg">Admin</span>
         </div>
@@ -43,7 +43,7 @@ export default async function AdminLayout({
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-ink-muted hover:bg-accent hover:text-ink transition-colors"
               >
                 <Icon className="h-4 w-4" />
                 {item.label}
@@ -54,7 +54,7 @@ export default async function AdminLayout({
         <div className="p-3 border-t border-border">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-ink-muted hover:bg-accent hover:text-ink transition-colors"
           >
             ← Back to app
           </Link>
@@ -62,11 +62,11 @@ export default async function AdminLayout({
       </aside>
 
       {/* Mobile top nav */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border flex justify-around py-2">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface border-t border-border flex justify-around py-2">
         {navItems.map((item) => {
           const Icon = item.icon
           return (
-            <Link key={item.href} href={item.href} className="p-2 text-muted-foreground">
+            <Link key={item.href} href={item.href} className="p-2 text-ink-muted">
               <Icon className="h-5 w-5" />
             </Link>
           )
