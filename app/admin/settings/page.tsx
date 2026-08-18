@@ -50,22 +50,22 @@ export default function AdminSettingsPage() {
     setTimeout(() => setSaved(false), 2000)
   }
 
-  if (!settings) return <p className="text-sm text-muted-foreground">Loading…</p>
+  if (!settings) return <p className="text-sm text-ink-muted">Loading…</p>
 
   return (
     <div className="space-y-6 max-w-lg">
       <div>
         <h1 className="text-2xl font-semibold">Settings</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           Platform-wide configuration and feature flags.
         </p>
       </div>
 
       <div className="space-y-4">
-        <label className="flex items-center justify-between rounded-xl border border-border bg-card p-4">
+        <label className="flex items-center justify-between rounded-xl border border-border bg-surface p-4">
           <div>
             <div className="font-medium text-sm">Maintenance mode</div>
-            <div className="text-xs text-muted-foreground mt-0.5">
+            <div className="text-xs text-ink-muted mt-0.5">
               Shows a maintenance page to all non-admin users.
             </div>
           </div>
@@ -77,10 +77,10 @@ export default function AdminSettingsPage() {
           />
         </label>
 
-        <label className="flex items-center justify-between rounded-xl border border-border bg-card p-4">
+        <label className="flex items-center justify-between rounded-xl border border-border bg-surface p-4">
           <div>
             <div className="font-medium text-sm">New signups enabled</div>
-            <div className="text-xs text-muted-foreground mt-0.5">
+            <div className="text-xs text-ink-muted mt-0.5">
               Turn off to temporarily pause new registrations.
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function AdminSettingsPage() {
           />
         </label>
 
-        <div className="rounded-xl border border-border bg-card p-4 space-y-3">
+        <div className="rounded-xl border border-border bg-surface p-4 space-y-3">
           <div>
             <div className="font-medium text-sm mb-1">Free tier listing limit</div>
             <input
@@ -123,7 +123,7 @@ export default function AdminSettingsPage() {
       <button
         onClick={save}
         disabled={saving}
-        className="px-4 py-2 rounded-lg text-sm font-medium bg-indigo-600 text-white disabled:opacity-50"
+        className="px-4 py-2 rounded-lg text-sm font-medium bg-primary text-primary-ink disabled:opacity-50"
       >
         {saving ? 'Saving…' : saved ? 'Saved ✓' : 'Save changes'}
       </button>
