@@ -16,10 +16,10 @@ type Report = {
 }
 
 const statusStyles: Record<Report['status'], string> = {
-  open: 'bg-amber-500/10 text-amber-600',
-  reviewing: 'bg-blue-500/10 text-blue-600',
-  resolved: 'bg-emerald-500/10 text-emerald-600',
-  dismissed: 'bg-muted text-muted-foreground',
+  open: 'bg-accent/10 text-accent',
+  reviewing: 'bg-primary/10 text-primary',
+  resolved: 'bg-success/10 text-success',
+  dismissed: 'bg-border text-ink-muted',
 }
 
 export default function AdminReportsPage() {
@@ -66,7 +66,7 @@ export default function AdminReportsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Reports</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           User-submitted reports on listings and accounts.
         </p>
       </div>
@@ -78,8 +78,8 @@ export default function AdminReportsPage() {
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
               filter === f
-                ? 'bg-indigo-600 text-white'
-                : 'bg-accent text-muted-foreground hover:text-foreground'
+                ? 'bg-primary text-primary-ink'
+                : 'bg-accent text-ink-muted hover:text-ink'
             }`}
           >
             {f}
@@ -88,13 +88,13 @@ export default function AdminReportsPage() {
       </div>
 
       {loading ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-ink-muted">Loading…</p>
       ) : reports.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No reports in this view.</p>
+        <p className="text-sm text-ink-muted">No reports in this view.</p>
       ) : (
         <div className="space-y-3">
           {reports.map((r) => (
-            <div key={r.id} className="rounded-xl border border-border bg-card p-5">
+            <div key={r.id} className="rounded-xl border border-border bg-surface p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
@@ -107,13 +107,13 @@ export default function AdminReportsPage() {
                   </div>
                   <p className="font-medium mt-2">{r.reason}</p>
                   {r.details && (
-                    <p className="text-sm text-muted-foreground mt-1">{r.details}</p>
+                    <p className="text-sm text-ink-muted mt-1">{r.details}</p>
                   )}
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="text-xs text-ink-muted mt-2">
                     Reported {new Date(r.created_at).toLocaleDateString('en-IN')} · target ID: {r.target_id}
                   </p>
                   {r.admin_note && (
-                    <p className="text-xs text-muted-foreground mt-1 italic">Note: {r.admin_note}</p>
+                    <p className="text-xs text-ink-muted mt-1 italic">Note: {r.admin_note}</p>
                   )}
                 </div>
                 {(r.status === 'open' || r.status === 'reviewing') && (
@@ -122,7 +122,7 @@ export default function AdminReportsPage() {
                       <button
                         disabled={actioningId === r.id}
                         onClick={() => updateStatus(r.id, 'reviewing')}
-                        className="px-3 py-1.5 rounded-lg text-sm font-medium bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 disabled:opacity-50"
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 disabled:opacity-50"
                       >
                         Start review
                       </button>
@@ -130,14 +130,14 @@ export default function AdminReportsPage() {
                     <button
                       disabled={actioningId === r.id}
                       onClick={() => updateStatus(r.id, 'resolved')}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20 disabled:opacity-50"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-success/10 text-success hover:bg-success/20 disabled:opacity-50"
                     >
                       Resolve
                     </button>
                     <button
                       disabled={actioningId === r.id}
                       onClick={() => updateStatus(r.id, 'dismissed')}
-                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-accent text-muted-foreground hover:text-foreground disabled:opacity-50"
+                      className="px-3 py-1.5 rounded-lg text-sm font-medium bg-accent text-ink-muted hover:text-ink disabled:opacity-50"
                     >
                       Dismiss
                     </button>
