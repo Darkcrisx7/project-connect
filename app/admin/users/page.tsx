@@ -64,7 +64,7 @@ export default function AdminUsersPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold">Users</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           Search, review, and manage user accounts.
         </p>
       </div>
@@ -78,13 +78,13 @@ export default function AdminUsersPage() {
       />
 
       {loading ? (
-        <p className="text-sm text-muted-foreground">Loading…</p>
+        <p className="text-sm text-ink-muted">Loading…</p>
       ) : users.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No users found.</p>
+        <p className="text-sm text-ink-muted">No users found.</p>
       ) : (
-        <div className="rounded-xl border border-border bg-card overflow-hidden">
+        <div className="rounded-xl border border-border bg-surface overflow-hidden">
           <table className="w-full text-sm">
-            <thead className="bg-accent/50 text-muted-foreground">
+            <thead className="bg-accent/50 text-ink-muted">
               <tr>
                 <th className="text-left font-medium px-4 py-3">Name</th>
                 <th className="text-left font-medium px-4 py-3">Email</th>
@@ -99,16 +99,16 @@ export default function AdminUsersPage() {
               {users.map((u) => (
                 <tr key={u.id} className="border-t border-border">
                   <td className="px-4 py-3">{u.full_name ?? '—'}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.email}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{u.phone_number ?? '—'}</td>
+                  <td className="px-4 py-3 text-ink-muted">{u.email}</td>
+                  <td className="px-4 py-3 text-ink-muted">{u.phone_number ?? '—'}</td>
                   <td className="px-4 py-3 capitalize">{u.role ?? '—'}</td>
                   <td className="px-4 py-3">{u.is_pro ? 'Yes' : 'No'}</td>
                   <td className="px-4 py-3">
                     <span
                       className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                         u.is_suspended
-                          ? 'bg-red-500/10 text-red-600'
-                          : 'bg-emerald-500/10 text-emerald-600'
+                          ? 'bg-danger/10 text-danger'
+                          : 'bg-success/10 text-success'
                       }`}
                     >
                       {u.is_suspended ? 'Suspended' : 'Active'}
@@ -120,8 +120,8 @@ export default function AdminUsersPage() {
                       onClick={() => toggleSuspend(u)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-50 ${
                         u.is_suspended
-                          ? 'bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/20'
-                          : 'bg-red-500/10 text-red-600 hover:bg-red-500/20'
+                          ? 'bg-success/10 text-success hover:bg-success/20'
+                          : 'bg-danger/10 text-danger hover:bg-danger/20'
                       }`}
                     >
                       {u.is_suspended ? 'Unsuspend' : 'Suspend'}
