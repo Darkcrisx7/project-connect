@@ -33,8 +33,6 @@ async function getStats() {
     supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('is_pro', true),
   ])
 
-  // Revenue estimate: Pro users × ₹79. Swap for a real sum over your
-  // payments table if you're logging individual transactions.
   const estimatedMonthlyRevenue = (proUsers ?? 0) * 79
 
   return {
@@ -64,7 +62,7 @@ export default async function AdminDashboardPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold">Dashboard</h1>
-        <p className="text-muted-foreground text-sm mt-1">
+        <p className="text-ink-muted text-sm mt-1">
           Platform overview and key metrics.
         </p>
       </div>
@@ -75,33 +73,33 @@ export default async function AdminDashboardPage() {
           return (
             <div
               key={c.label}
-              className={`rounded-xl border p-5 bg-card ${
-                c.alert ? 'border-amber-400/60' : 'border-border'
+              className={`rounded-xl border p-5 bg-surface ${
+                c.alert ? 'border-accent/60' : 'border-border'
               }`}
             >
               <div className="flex items-center justify-between mb-3">
-                <Icon className="h-5 w-5 text-muted-foreground" />
+                <Icon className="h-5 w-5 text-ink-muted" />
                 {c.alert && (
-                  <span className="text-xs font-medium text-amber-500">
+                  <span className="text-xs font-medium text-accent">
                     Needs attention
                   </span>
                 )}
               </div>
               <div className="text-2xl font-semibold">{c.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{c.label}</div>
+              <div className="text-sm text-ink-muted mt-1">{c.label}</div>
             </div>
           )
         })}
       </div>
 
-      <div className="rounded-xl border border-border bg-card p-5">
-        <div className="text-sm text-muted-foreground">
+      <div className="rounded-xl border border-border bg-surface p-5">
+        <div className="text-sm text-ink-muted">
           Estimated monthly recurring revenue
         </div>
         <div className="text-3xl font-semibold mt-1">
           ₹{stats.estimatedMonthlyRevenue.toLocaleString('en-IN')}
         </div>
-        <div className="text-xs text-muted-foreground mt-1">
+        <div className="text-xs text-ink-muted mt-1">
           Based on {stats.proUsers} active Pro subscriber(s) × ₹79/month.
         </div>
       </div>
