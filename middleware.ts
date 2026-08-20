@@ -4,7 +4,17 @@ import { updateSession } from "@/lib/supabase/middleware";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
+// Cache the maintenance-mode flag in memory for a short window so we're not
+// hitting Supabase on every single page request. This resets on cold starts,
+// and a stale value can persist for up to CACHE_MS after an admin flips the
+// toggle — worth knowing, but a small trade-off for real site-wide speed.
+const CACHE_MS = 20_000;
+let cached: { value: boolean; expiresAt: number } | null = null;
+
 async function isMaintenanceMode(): Promise<boolean> {
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.value;
+  }
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/platform_settings?key=eq.maintenance_mode&select=value`,
@@ -17,9 +27,10 @@ async function isMaintenanceMode(): Promise<boolean> {
       }
     );
     const data = await res.json();
-    return data?.[0]?.value === true;
+    const value = data?.[0]?.value === true;
+    cached = { value, expiresAt: Date.now() + CACHE_MS };
+    return value;
   } catch {
-    // Fail open — a network hiccup here should never lock everyone out.
     return false;
   }
 }
@@ -27,9 +38,6 @@ async function isMaintenanceMode(): Promise<boolean> {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Admins always get through, so they can flip maintenance mode back off
-  // from /admin/settings even while it's on. The maintenance page itself
-  // and its own assets are exempt so it doesn't redirect to itself forever.
   const isExempt =
     pathname.startsWith("/admin") ||
     pathname.startsWith("/api/admin") ||
