@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 declare global {
   interface Window {
-    Cashfree: (options: { mode: string }) => {
+    Cashfree?: (options: { mode: string }) => {
       checkout: (options: Record<string, unknown>) => Promise<unknown>;
     };
   }
@@ -53,7 +53,7 @@ export function UpgradeButton({
       return;
     }
 
-    const cashfree = window.Cashfree({ mode: "production" });
+    const cashfree = window.Cashfree!({ mode: "production" });
 
     try {
       await cashfree.checkout({
