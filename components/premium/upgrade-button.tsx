@@ -1,29 +1,25 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-
 declare global {
   interface Window {
-    Razorpay: new (options: Record<string, unknown>) => { open: () => void };
+    Cashfree: (options: { mode: string }) => {
+      checkout: (options: Record<string, unknown>) => Promise<unknown>;
+    };
   }
 }
-
-function loadRazorpayScript(): Promise<boolean> {
+function loadCashfreeScript(): Promise<boolean> {
   return new Promise((resolve) => {
-    if (window.Razorpay) return resolve(true);
+    if (window.Cashfree) return resolve(true);
     const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.src = "https://sdk.cashfree.com/js/v3/cashfree.js";
     script.onload = () => resolve(true);
     script.onerror = () => resolve(false);
     document.body.appendChild(script);
   });
 }
-
 export function UpgradeButton({
-  userEmail,
-  userName,
   label = "Upgrade to Pro — ₹79/mo",
   loadingLabel = "Opening checkout…",
   variant = "accent",
@@ -42,55 +38,46 @@ export function UpgradeButton({
     setLoading(true);
     setError(undefined);
 
-    const scriptReady = await loadRazorpayScript();
+    const scriptReady = await loadCashfreeScript();
     if (!scriptReady) {
       setError("Couldn't load payment checkout — check your connection and try again.");
       setLoading(false);
       return;
     }
 
-    const orderRes = await fetch("/api/razorpay/create-order", { method: "POST" });
+    const orderRes = await fetch("/api/cashfree/create-order", { method: "POST" });
     const order = await orderRes.json();
-
     if (!orderRes.ok) {
       setError(order.error ?? "Couldn't start checkout — try again.");
       setLoading(false);
       return;
     }
 
-    const razorpay = new window.Razorpay({
-      key: order.keyId,
-      amount: order.amount,
-      currency: order.currency,
-      name: "Project Connect",
-      description: "Pro membership — 1 month",
-      order_id: order.orderId,
-      prefill: { email: userEmail, name: userName },
-      theme: { color: "#5B4CFF" },
-      handler: async (response: {
-        razorpay_order_id: string;
-        razorpay_payment_id: string;
-        razorpay_signature: string;
-      }) => {
-        const verifyRes = await fetch("/api/razorpay/verify", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(response),
-        });
-        if (verifyRes.ok) {
-          router.refresh();
-        } else {
-          const data = await verifyRes.json();
-          setError(data.error ?? "Payment went through but activation failed — contact support.");
-        }
-        setLoading(false);
-      },
-      modal: {
-        ondismiss: () => setLoading(false),
-      },
+    const cashfree = window.Cashfree({ mode: "production" });
+
+    try {
+      await cashfree.checkout({
+        paymentSessionId: order.paymentSessionId,
+        redirectTarget: "_modal",
+      });
+    } catch {
+      // Checkout closed/cancelled/errored client-side — fall through to
+      // verify anyway, since Cashfree's server is the real source of truth.
+    }
+
+    const verifyRes = await fetch("/api/cashfree/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ orderId: order.orderId }),
     });
 
-    razorpay.open();
+    if (verifyRes.ok) {
+      router.refresh();
+    } else {
+      const data = await verifyRes.json();
+      setError(data.error ?? "Payment wasn't completed — try again.");
+    }
+    setLoading(false);
   }
 
   return (
