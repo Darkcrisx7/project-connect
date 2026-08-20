@@ -243,7 +243,7 @@ export default async function DashboardPage() {
                 </dt>
                 <dd className="flex flex-wrap justify-end gap-1.5">
                   {profile?.skills && profile.skills.length > 0 ? (
-                    profile.skills.map((skill) => (
+                    profile.skills.map((skill: string) => (
                       <span
                         key={skill}
                         className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[11px] text-primary"
