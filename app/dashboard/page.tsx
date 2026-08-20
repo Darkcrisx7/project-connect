@@ -19,10 +19,10 @@ import {
   MapPin,
   BarChart3,
   User,
-  MoreVertical,
 } from "lucide-react";
 import type { Startup } from "@/lib/startup-constants";
 import { AppHeader } from "@/components/layout/app-header";
+import { ListingMenu } from "@/components/dashboard/listing-menu";
 
 function getGreeting() {
   const istHour = Number(
@@ -185,13 +185,7 @@ export default async function DashboardPage() {
                 {myStartups.map((s) => (
                   <div key={s.id} className="relative">
                     <StartupCard startup={s} />
-                    <button
-                      type="button"
-                      aria-label="More options"
-                      className="absolute right-4 top-4 rounded-full p-1 text-ink-muted transition-colors hover:bg-background hover:text-ink"
-                    >
-                      <MoreVertical size={16} />
-                    </button>
+                    <ListingMenu startupId={s.id} startupName={s.name} />
                   </div>
                 ))}
               </div>
