@@ -1,4 +1,4 @@
-import { AppHeader } from "@/components/layout/app-header";
+import { SiteNav } from "@/components/landing/site-nav";
 import { Check } from "lucide-react";
 
 const freeFeatures = [
@@ -18,7 +18,7 @@ const proFeatures = [
 export default function PricingPage() {
   return (
     <>
-      <AppHeader />
+      <SiteNav />
       <div className="mx-auto max-w-2xl px-4 py-12 pb-28 sm:py-16 md:pb-16">
         <h1 className="font-display text-2xl font-semibold text-ink">Pricing</h1>
         <p className="mt-2 text-[14px] text-ink-muted">
