@@ -66,7 +66,7 @@ export const brand = {
   },
 
   contact: {
-    email: "hello@projectconnect.in",
+    email: "myprojectconnect6@gmail.com",
   },
 } as const;
 
