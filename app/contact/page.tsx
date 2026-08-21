@@ -1,10 +1,10 @@
-import { AppHeader } from "@/components/layout/app-header";
+import { SiteNav } from "@/components/landing/site-nav";
 import { Mail, MapPin } from "lucide-react";
 
 export default function ContactPage() {
   return (
     <>
-      <AppHeader />
+      <SiteNav />
       <div className="mx-auto max-w-2xl px-4 py-12 pb-28 sm:py-16 md:pb-16">
         <h1 className="font-display text-2xl font-semibold text-ink">Contact Us</h1>
         <p className="mt-2 text-[14px] text-ink-muted">
