@@ -17,10 +17,7 @@ export default function ContactPage() {
             <Mail size={18} className="mt-0.5 shrink-0 text-primary" />
             <div>
               <p className="font-display text-[15px] font-semibold text-ink">Email</p>
-              
-                href="mailto:myprojectconnect6@gmail.com"
-                className="mt-1 block text-[14px] text-primary hover:underline"
-              >
+              <a href="mailto:myprojectconnect6@gmail.com" className="mt-1 block text-[14px] text-primary hover:underline">
                 myprojectconnect6@gmail.com
               </a>
               <p className="mt-1 text-[13px] text-ink-muted">
