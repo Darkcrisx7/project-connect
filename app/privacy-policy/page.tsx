@@ -1,4 +1,4 @@
-import { AppHeader } from "@/components/layout/app-header";
+import { SiteNav } from "@/components/landing/site-nav";
 
 export default function PrivacyPolicyPage() {
   return (
