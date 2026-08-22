@@ -1,9 +1,9 @@
-import { AppHeader } from "@/components/layout/app-header";
+import { SiteNav } from "@/components/landing/site-nav";
 
 export default function TermsPage() {
   return (
     <>
-      <AppHeader />
+      <SiteNav />
       <div className="mx-auto max-w-2xl px-4 py-12 pb-28 sm:py-16 md:pb-16 text-[14px] leading-relaxed text-ink-muted">
         <h1 className="font-display text-2xl font-semibold text-ink">Terms &amp; Conditions</h1>
         <p className="mt-2 text-[13px]">Last updated: 20 August 2026</p>
@@ -79,8 +79,8 @@ export default function TermsPage() {
         <h2 className="mt-8 font-display text-[17px] font-semibold text-ink">9. Contact us</h2>
         <p className="mt-2">
           For any questions about these Terms, contact us at:{" "}
-          <a href="mailto:hraheebbasha@gmail.com" className="text-primary hover:underline">
-            hraheebbasha@gmail.com
+          <a href="mailto:myprojectconnect6@gmail.com" className="text-primary hover:underline">
+            myprojectconnect6@gmail.com
           </a>
         </p>
       </div>
