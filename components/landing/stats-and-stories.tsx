@@ -56,7 +56,7 @@ export function Testimonials() {
 
 const faqs = [
   {
-    q: "Is Project Connect only for engineers?",
+    q: "Is Bangalore Teamup only for engineers?",
     a: "No. Startups on the platform need designers, marketers, business and finance students, content creators and more — not just developers.",
   },
   {
