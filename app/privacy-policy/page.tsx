@@ -9,8 +9,8 @@ export default function PrivacyPolicyPage() {
         <p className="mt-2 text-[13px]">Last updated: 20 August 2026</p>
 
         <p className="mt-6">
-          Project Connect (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the
-          Project Connect platform (the &quot;Service&quot;), which helps student founders in
+          Bangalore Teamup (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the
+          Bangalore Teamup platform (the &quot;Service&quot;), which helps student founders in
           India find co-founders and team members. This Privacy Policy explains what
           information we collect, how we use it, and the choices you have.
         </p>
