@@ -9,7 +9,7 @@ export default function RefundPolicyPage() {
         <p className="mt-2 text-[13px]">Last updated: 20 August 2026</p>
 
         <p className="mt-6">
-          This policy applies to the Project Connect &quot;Pro&quot; subscription (₹79/month).
+          This policy applies to the Bangalore Teamup &quot;Pro&quot; subscription (₹79/month).
           Please read it before purchasing.
         </p>
 
