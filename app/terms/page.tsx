@@ -9,7 +9,7 @@ export default function TermsPage() {
         <p className="mt-2 text-[13px]">Last updated: 20 August 2026</p>
 
         <p className="mt-6">
-          These Terms &amp; Conditions (&quot;Terms&quot;) govern your use of Project Connect
+          These Terms &amp; Conditions (&quot;Terms&quot;) govern your use of Bangalore Teamup
           (the &quot;Service&quot;). By creating an account or using the Service, you agree to
           these Terms.
         </p>
