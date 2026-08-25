@@ -7,15 +7,15 @@
  */
 
 export const brand = {
-  name: "Project Connect",
-  shortName: "Connect",
-  domain: "projectconnect.in",
+  name: "Bangalore Teamup",
+  shortName: "Teamup",
+  domain: "bangaloreteamup.in",
   tagline: "Where student founders find their team",
   description:
     "India's platform for student founders, co-founders and early startup teams — share ideas, find teammates, and build together.",
 
   // Used for the logo mark when no image asset is supplied.
-  logoInitial: "C",
+  logoInitial: "B",
 
   colors: {
     light: {
@@ -53,16 +53,16 @@ export const brand = {
   },
 
   metadata: {
-    title: "Project Connect — Where student founders find their team",
+    title: "Bangalore Teamup — Where student founders find their team",
     ogImage: "/og-image.png",
-    twitterHandle: "@projectconnect",
+    twitterHandle: "@bangaloreteamup",
     themeColor: "#5B4CFF",
   },
 
   social: {
-    twitter: "https://twitter.com/projectconnect",
-    instagram: "https://instagram.com/projectconnect",
-    linkedin: "https://linkedin.com/company/projectconnect",
+    twitter: "https://twitter.com/bangaloreteamup",
+    instagram: "https://instagram.com/bangaloreteamup",
+    linkedin: "https://linkedin.com/company/bangaloreteamup",
   },
 
   contact: {
