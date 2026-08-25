@@ -29,7 +29,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
-            Project Connect is where student founders share startup ideas,
+            Bangalore Teamup is where student founders share startup ideas,
             find co-founders, and build real teams — before anyone&apos;s
             heard of them.
           </p>
