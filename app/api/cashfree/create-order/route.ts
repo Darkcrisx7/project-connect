@@ -34,7 +34,7 @@ export async function POST() {
         order_currency: "INR",
         customer_details: {
           customer_id: user.id,
-          customer_name: profile.full_name || "Project Connect user",
+          customer_name: profile.full_name || "Bangalore Teamup user",
           customer_email: profile.email,
           customer_phone: profile.phone_number,
         },
