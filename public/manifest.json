@@ -1,6 +1,6 @@
 {
-  "name": "Project Connect",
-  "short_name": "Connect",
+  "name": "Bangalore Teamup",
+  "short_name": "Teamup",
   "description": "Where student founders find their team",
   "start_url": "/",
   "display": "standalone",
