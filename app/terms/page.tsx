@@ -57,7 +57,7 @@ export default function TermsPage() {
 
         <h2 className="mt-8 font-display text-[17px] font-semibold text-ink">6. No guarantee of outcomes</h2>
         <p className="mt-2">
-          Project Connect is a platform that helps students discover and connect with potential
+          Bangalore Teamup is a platform that helps students discover and connect with potential
           co-founders and team members. We do not guarantee that you will find a team, a
           startup, or that any startup listed will succeed. Any agreements you make with other
           users (equity, roles, responsibilities) are solely between you and them.
