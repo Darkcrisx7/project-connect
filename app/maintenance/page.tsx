@@ -5,7 +5,7 @@ export default function MaintenancePage() {
         <div className="text-5xl">🔧</div>
         <h1 className="text-2xl font-semibold">We&apos;ll be right back</h1>
         <p className="text-muted-foreground">
-          Project Connect is undergoing quick maintenance. Please check back
+          Bangalore Teamup is undergoing quick maintenance. Please check back
           shortly — this usually only takes a few minutes.
         </p>
       </div>
