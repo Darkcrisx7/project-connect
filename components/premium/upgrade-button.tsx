@@ -20,7 +20,7 @@ function loadCashfreeScript(): Promise<boolean> {
   });
 }
 export function UpgradeButton({
-  label = "Upgrade to Pro — ₹79/mo",
+  label = "Upgrade to Pro — ₹99/mo",
   loadingLabel = "Opening checkout…",
   variant = "accent",
 }: {
