@@ -49,14 +49,19 @@ export async function POST() {
       return NextResponse.json({ error: "Couldn't start checkout — try again." }, { status: 500 });
     }
 
-    const service = createServiceClient();
-    await service.from("payments").insert({
+        const service = createServiceClient();
+    const { error: insertError } = await service.from("payments").insert({
       user_id: user.id,
       gateway: "cashfree",
       cashfree_order_id: order.order_id,
       amount_paise: PRO_PRICE_RUPEES * 100,
       status: "created",
     });
+
+    if (insertError) {
+      console.error("Failed to record payment row", insertError);
+      return NextResponse.json({ error: "Couldn't start checkout — try again." }, { status: 500 });
+    }
 
     return NextResponse.json({
       orderId: order.order_id,
