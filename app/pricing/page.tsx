@@ -3,9 +3,10 @@ import { Check } from "lucide-react";
 
 const freeFeatures = [
   "1 active startup listing",
-  "3 applications per month",
+  "5 applications per month",
   "Discover and browse startups",
   "Basic profile",
+  "Save startups (coming soon)",
 ];
 
 const proFeatures = [
@@ -13,6 +14,8 @@ const proFeatures = [
   "Unlimited applications",
   "Premium discovery features",
   "Priority visibility for your listings",
+  "Verified profile badge (coming soon)",
+  "Personal help from our team to find teammates",
 ];
 
 export default function PricingPage() {
@@ -45,7 +48,7 @@ export default function PricingPage() {
               Pro
             </h2>
             <p className="mt-1 text-[28px] font-semibold text-ink">
-              ₹79 <span className="text-[15px] font-normal text-ink-muted">/ month (INR)</span>
+              ₹99 <span className="text-[15px] font-normal text-ink-muted">/ month (INR)</span>
             </p>
             <p className="text-[13px] text-ink-muted">billed monthly, no auto-renewal</p>
             <ul className="mt-5 space-y-2.5">
