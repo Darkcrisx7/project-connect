@@ -141,7 +141,7 @@ export default async function DashboardPage() {
                     <UpgradeButton
                       userEmail={profile.email}
                       userName={profile.full_name || ""}
-                      label="Extend for ₹79"
+                      label="Extend for ₹99"
                       loadingLabel="Opening checkout…"
                     />
                   </div>
@@ -150,7 +150,7 @@ export default async function DashboardPage() {
                 <>
                   <h2 className="font-display text-[16px] font-semibold">Free plan</h2>
                   <p className="mt-1.5 max-w-md text-[13px] text-ink-muted">
-                    1 active listing and 3 applications a month. Upgrade to Pro for
+                    1 active listing and 5 applications a month. Upgrade to Pro for
                     unlimited listings and unlimited applications.
                   </p>
                   <div className="mt-4">
