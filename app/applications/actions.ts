@@ -53,9 +53,9 @@ export async function applyToStartup(formData: FormData) {
       .eq("applicant_id", user.id)
       .gte("created_at", startOfMonth.toISOString());
 
-    if ((count ?? 0) >= 3) {
+    if ((count ?? 0) >= 5) {
       return {
-        error: "You've used your 3 free applications this month. Upgrade to Pro (₹79/mo) for unlimited applications.",
+        error: "You've used your free applications this month. Upgrade to Pro (₹99/mo) for unlimited applications.",
       };
     }
   }
