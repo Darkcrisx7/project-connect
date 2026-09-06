@@ -10,5 +10,5 @@ export function cashfreeHeaders() {
   };
 }
 
-export const PRO_PRICE_RUPEES = 79;
+export const PRO_PRICE_RUPEES = 99;
 export const PRO_DURATION_DAYS = 30;
