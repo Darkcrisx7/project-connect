@@ -36,6 +36,9 @@ const profileSchema = z.object({
   course: z.string().min(2, "Enter your course"),
   year: z.string().min(1, "Select your year"),
   location: z.string().min(2, "Enter your city"),
+  phoneNumber: z
+    .string()
+    .regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number"),
   bio: z.string().max(400, "Keep it under 400 characters").optional(),
   skills: z.string().optional(),
   interests: z.string().optional(),
@@ -72,6 +75,7 @@ export async function saveProfile(formData: FormData) {
       course: parsed.data.course,
       year: parsed.data.year,
       location: parsed.data.location,
+      phone_number: parsed.data.phoneNumber,
       bio: parsed.data.bio || null,
       skills: toArray(parsed.data.skills),
       interests: toArray(parsed.data.interests),
