@@ -197,9 +197,14 @@ export default async function DashboardPage() {
           </div>
 
           <div className="rounded-2xl border border-border bg-surface p-6">
-            <h2 className="flex items-center gap-2 font-display text-[15px] font-semibold">
-              <User size={16} className="text-primary" /> Your profile
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="flex items-center gap-2 font-display text-[15px] font-semibold">
+                <User size={16} className="text-primary" /> Your profile
+              </h2>
+              <a href="/profile/edit" className="text-[13px] font-medium text-primary hover:underline">
+                Edit
+              </a>
+            </div>
             <div className="mt-4 flex items-center gap-3">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary/60 font-display text-[17px] font-semibold text-primary-ink">
                 {initials(profile?.full_name || "?")}
