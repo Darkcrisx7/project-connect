@@ -59,6 +59,21 @@ export default function ProfilePage() {
         </div>
 
         <div>
+          <label className={label}>Mobile number</label>
+          <input
+            name="phoneNumber"
+            type="tel"
+            inputMode="numeric"
+            required
+            placeholder="10-digit mobile number"
+            className={inputClass}
+          />
+          <p className="mt-1 text-[12px] text-ink-muted">
+            Needed for payment receipts if you ever upgrade to Pro. We won&apos;t share it publicly.
+          </p>
+        </div>
+
+        <div>
           <label className={label}>Short bio</label>
           <textarea
             name="bio"
