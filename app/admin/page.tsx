@@ -33,7 +33,7 @@ async function getStats() {
     supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('is_pro', true),
   ])
 
-  const estimatedMonthlyRevenue = (proUsers ?? 0) * 79
+  const estimatedMonthlyRevenue = (proUsers ?? 0) * 99
 
   return {
     totalUsers: totalUsers ?? 0,
@@ -100,7 +100,7 @@ export default async function AdminDashboardPage() {
           ₹{stats.estimatedMonthlyRevenue.toLocaleString('en-IN')}
         </div>
         <div className="text-xs text-ink-muted mt-1">
-          Based on {stats.proUsers} active Pro subscriber(s) × ₹79/month.
+          Based on {stats.proUsers} active Pro subscriber(s) × ₹99/month.
         </div>
       </div>
     </div>
