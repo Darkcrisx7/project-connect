@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { brand } from "@/config/brand";
 import { RegisterServiceWorker } from "@/components/pwa/register-sw";
 import "./globals.css";
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col bg-background text-ink">
         <RegisterServiceWorker />
         {children}
+        <Analytics />
       </body>
     </html>
   );
